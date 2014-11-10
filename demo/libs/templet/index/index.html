@@ -1,0 +1,12 @@
+@load(/index/head.html)
+<body>
+	@Toarray(list)(没有找到数据)
+	{
+		$list.edu_user $list.edu_name
+	}
+	@loop(10){
+		<div>内容</div>
+	}
+	<img style="height:200px;width:auto;" src="@load(/images/first_bg.jpg)">
+</body>
+@load(/index/fundus.html)
