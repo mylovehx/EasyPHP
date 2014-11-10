@@ -40,7 +40,7 @@ class easyview
 			$len = count($this->data[$arguments]);
 			for ($i=0; $i < $len; $i++) { 
 				$temp = $modeltext;
-				if ($this->data[$arguments][$i] == '') {
+				if (!is_array($this->data[$arguments][$i])) {
 					break;
 				}
 				foreach ($this->data[$arguments][$i] as $key => $value) {

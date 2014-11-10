@@ -2,9 +2,10 @@
 //控制器
     class indexController{
     	function show(){
-    		$data = M('index');
+    		//$data = M('index');
     		$view = V('index');
-            $arr = $data->get();
+            //$arr = $data->get();
+            $arr = '';
     		$re = array(
                 
                 'list'=>array($arr),
