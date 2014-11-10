@@ -53,8 +53,9 @@
 	$method= isset($_GET['method'])?$_GET['method']:'show';
 	//允许调用的方法集合
 	$func = array('index','show');
+	$funclist = ','.implode(',',$func).',';
 	//判断调用的方法是否在允许调用的方法范围内
-	if (in_array($controller, $func) && in_array($method, $func)) {
+	if (strpos($funclist, $controller)!==FALSE && strpos($funclist, $method)!==FALSE) {
 		//调用控制器
 		C($controller,$method);
 	}else{

@@ -49,7 +49,7 @@
       require_once EASYROOT.'/libs/org/'.$path.'/'.$name.'.class.php';
       $obj = new $name();
       if (isset($argument)) {//判断是否需要对第三方类库赋值
-        foreach ($argument as $key => $value) {
+        foreach ($argument as $key => &$value) {
           $obj->$key = $value;
         }
       }

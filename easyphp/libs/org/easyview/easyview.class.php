@@ -43,7 +43,7 @@ class easyview
 				if (!is_array($this->data[$arguments][$i])) {
 					break;
 				}
-				foreach ($this->data[$arguments][$i] as $key => $value) {
+				foreach ($this->data[$arguments][$i] as $key => &$value) {
 					if (strpos($temp, '$'.$arguments.'.'.$key)) {
 						$temp = str_replace('$'.$arguments.'.'.$key,$value,$temp);
 					}
@@ -89,7 +89,7 @@ class easyview
 				return $this->url.$arguments;
 				default:
 				if (!is_file($file)) {
-					return 'Can\'t find ('.$file.')';
+					return '';
 				}
 				//读取外部模板文件压缩外部文件大小
 				return file_get_contents($file);
@@ -137,14 +137,14 @@ class easyview
 		$htmltext = substr_replace($htmltext, '', $loop_in - 1,$in - $loop_in + 2);
 	}
 	function To(&$html_text){
-	$funcname = '';
-	$code     = '';
-	$func_in  = 0;
-	$agm_in   = 0;
-	$_in  = 0;
-	$count = 0;
-	$ate = array();
-	while (TRUE) {
+		$funcname = '';
+		$code     = '';
+		$func_in  = 0;
+		$agm_in   = 0;
+		$_in  = 0;
+		$count = 0;
+		$ate = array();
+		while (TRUE) {
 		$in = strpos($html_text,'@');//寻找关键字并返回位置
 		if ($in === FALSE) {
 			break;
@@ -156,7 +156,7 @@ class easyview
 		if ($count >= 2) {
 			$html_text[$in] = ' ';
 			$ate[] = $in;//将位置插入数组
-			$count = 0;
+			$count = 0;//计数复位
 			continue;
 		}
 		if ($in > 1) {
@@ -181,31 +181,22 @@ class easyview
 				$func_in  = $funcname;
 				$funcname = substr($html_text,$funcname + 1,$in - $funcname - 1);
 				continue;
-			}
-			else if ($agm_in > 0 &&$html_text[$in] == ')') {
+			}else if ($agm_in > 0 &&$html_text[$in] == ')') {
 				//判断函数尾部括号
 				$code    = substr($html_text,$func_in ,$in - $func_in + 1);
 				$funcarg = substr($html_text,$agm_in,$in - $agm_in);
 				//分割自定义参数
 				//$funcarg = explode(',',$funcarg);
-
-				if (isset($html_text[$in+1])) {
-					if ($html_text[$in+1] == '(') {
-						$in_in = $in+1;
-						$out_out = 0;
-						$len = strlen($html_text) - $in+1;
-						$li = 0;
-						while ($li < $len) {
-							if ($html_text[$in+1+$li] == ')' && $html_text[$in+$li] != '\\'){
-								$dedaulttext = substr($html_text,$in+1,$in+1+$li - $in);
-								$out_out = $in+1+$li;
-								break;
-							}
-							++$li;
+				if (isset($html_text[$in+1]) && $html_text[$in+1] == '(') {
+					$li = 0;
+					while (isset($html_text[$in+1+$li])) {
+						if ($html_text[$in+1+$li] == ')' && $html_text[$in+$li] != '\\'){
+							$dedaulttext = substr($html_text,$in+1,$in+1+$li - $in);
+							break;
 						}
+						++$li;
 					}
 				}
-
 				//载入模板函数对象
 				//调用自定义函数变量,返回并替换函数
 				//$funcname 自定义函数名
@@ -218,14 +209,14 @@ class easyview
 					//判断是否有默认数据
 					if (isset($dedaulttext)) {
 						//判断是否需要使用默认数据
-						if ($resou == '') {
+						if (empty($resou)) {
 							if (strpos($dedaulttext,'\\(')) {
 								$dedaulttext = str_replace('\\(', '(',$dedaulttext);
 							}
 							if (strpos($dedaulttext,'\\)')){
 								$dedaulttext = str_replace('\\)', ')', $dedaulttext);
 							}
-							$resou = substr($dedaulttext,1,strlen($dedaulttext)-2);
+							$resou = substr($dedaulttext,1,($in+$li-$in)-1);
 						}
 						$html_text = substr_replace($html_text, '', $in+1,$in+1+$li - $in);
 						unset($dedaulttext);
@@ -239,11 +230,11 @@ class easyview
 		}
 	}
 		//关键词复位
-		foreach ($ate as $value) {
-			$html_text[$value] = '@';
-		}
-		$html_text = str_replace('\\{', '{', str_replace('\\}', '}', $html_text));
+	foreach ($ate as &$value) {
+		$html_text[$value] = '@';
 	}
+	$html_text = str_replace('\\{', '{', str_replace('\\}', '}', $html_text));
+}
 }
 
 ?>
