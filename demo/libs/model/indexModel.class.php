@@ -7,8 +7,10 @@
     		//if (count($arr) > 0) {
     			//$arr = $arr[0];
     		//}
-            $arr ='';
-    		return $arr;
+                $re = array(
+                'WEB-NAME'=>'爱遥控 - 主页'
+                );
+    		return $re;
     	}
     }
 ?>

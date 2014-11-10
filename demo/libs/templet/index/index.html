@@ -1,12 +1,56 @@
-@load(/index/head.html)
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+	@load(/public/head.html)
+	@load(/css/index.doc.css)
+	<title>@label(WEB-NAME)(主页)</title>
+</head>
 <body>
-	@Toarray(list)(没有找到数据)
-	{
-		$list.edu_user $list.edu_name
-	}
-	@loop(10){
-		<div>内容</div>
-	}
-	<img style="height:200px;width:auto;" src="@load(/images/first_bg.jpg)">
+	<div class="container">
+<div class="row">
+	
+		<div class="container">
+			<div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
+				<img src="@load(/images/logo.png)">
+			</div>
+			<div class="col-lg-10 col-md-9 col-sm-8 col-xs-12 indextext">
+				<span class="text-success text-nowrap">做最好的遥控器查询网站.</span>
+			</div>
+		</div>
+
+</div>
+<div class="row">
+			<div class="input-group input-group-lg col-lg-12 col-md-12 col-sm-12 col-xs-12 indexContext">
+				<span class="input-group-addon">
+					<span class="glyphicon glyphicon-search"></span>
+				</span>
+				<input type="text" class="form-control" placeholder="输入关键词...">
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="button">Go!</button>
+				</span>
+			</div>
+</div>
+<div class="row">
+		@loop(4){
+		<div class="container text-center indexlist">
+		<div class="row">
+			@loop(6){
+			<div alt="..." class="col-lg-2 col-md-2 col-sm-4 col-xs-6 indeximgdiv">
+				<a href="."><img class="img-thumbnail indeximg" src="@load(/images/index.svg)"></a>
+			</div>
+			}
+		</div>
+		</div>
+		}
+</div>
+	</div>	
+<footer class="bs-docs-footer" role="contentinfo">
+  <div class="container text-center">
+  ©2014 爱遥控 保留所有权利
+  </div>
+</footer>
+
+@load(/public/fundus.html)
 </body>
-@load(/index/fundus.html)
+</html>

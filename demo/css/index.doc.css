@@ -1,0 +1,34 @@
+.bs-docs-footer {
+    padding-top: 20px;
+    padding-bottom: 40px;
+    margin-top: 20px;
+    color: #777;
+    text-align: center;
+    border-top: 1px solid #E5E5E5;
+}
+
+.indexlist{
+	margin-top:20px;
+	padding:0px 20px 0px 20px;
+}
+
+.indeximg{
+	width: 140px;
+	height: 140px;
+}
+
+.indeximgdiv{
+	margin:0;
+	padding:0;
+}
+.indeximg:hover{
+	border: 1px solid #428BCA;
+}
+
+.indextext{
+	padding-top:50px;
+}
+
+.indexContext{
+	margin-top:20px;
+}
